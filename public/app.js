@@ -20,6 +20,7 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
 
         //If user has pushed "take a chance button"
         if (chance){
+            buttonHide(false, true, true, true)
             if (teller !== 2){
                 roundScore += dice;
                 document.querySelector('#current-' + activePlayer).textContent = roundScore;
@@ -41,9 +42,14 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
                     }, 1000);
 
                     if (scores[activePlayer -1] > gameScore){
+                        buttonView()
                         youWin(activePlayer - 1);
                     }
-                    roundScore = 0
+                    else{
+                        buttonView()
+                        roundScore = 0
+                    }
+
                 }
                 else{
                     document.querySelector('#score-' + (activePlayer +1)).textContent = scores[activePlayer + 1];
@@ -53,9 +59,14 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
                     }, 1000);
 
                     if (scores[activePlayer +1] > gameScore){
+                        buttonView()
                         youWin(activePlayer + 1);
                     }
-                    roundScore = 0;
+                    else{
+                        buttonView()
+                        roundScore = 0;
+                    }
+
                 }
 
                 setTimeout(function(){
@@ -91,7 +102,7 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
                 document.querySelector('.chance').textContent = "Du trillet en ener. Automatisk chugg"
                 document.querySelector('.chance').style.display = "block";
                 gameActive = false;
-                buttonHide();
+                buttonHide(true, true, true, true);
                 setTimeout(function(){
                     buttonView();
                     gameActive = true;
@@ -145,6 +156,7 @@ function nextPlayer(){
 document.querySelector('.btn-new').addEventListener('click', init);
 
 document.querySelector('.btn-chance').addEventListener('click', function(){
+    buttonHide(false, true, true, true)
     if (activePlayer === 0){
         if (!p1Chance){
             if(gameActive){
@@ -159,6 +171,7 @@ document.querySelector('.btn-chance').addEventListener('click', function(){
             }
         }
     }
+
 });
 
 
@@ -171,7 +184,6 @@ function chance_hjelp(chanceNr){
     chance = true;
     document.querySelector('.chance').textContent = "You have taken a chance. Your opponent gets three tries, and if the sum is above 10, the points is yours."
     document.querySelector('.chance-used' + chanceNr).style.display = "block";
-
     nextPlayer()
 }
 
@@ -185,6 +197,8 @@ function youWin(activePlayers){
 
     document.querySelector('.dice').style.display = "none";
     gameActive = false;
+    buttonHide(true, true, false, true)
+
 }
 
 document.querySelector('.btn-final-score').addEventListener('click', function(){
@@ -201,9 +215,10 @@ document.querySelector('.btn-final-score').addEventListener('click', function(){
 })
 
 function init (){
+
     newMeny()
     hidden();
-
+    buttonView()
     p1Chance = false;
     p2Chance = false;
     scores = [0,0];
@@ -249,11 +264,19 @@ function newMeny(){
 }
 
 
-function buttonHide(){
-    document.querySelector('.btn-roll').style.opacity = "50%";
-    document.querySelector('.btn-chance').style.opacity = "50%";
-    document.querySelector('.btn-new').style.opacity = "50%";
-    document.querySelector('.btn-hold').style.opacity = "50%";
+function buttonHide(roll, chance, newG, hold){
+    if (roll){
+        document.querySelector('.btn-roll').style.opacity = "50%";
+    }
+    if(chance){
+        document.querySelector('.btn-chance').style.opacity = "50%";
+    }
+    if(newG){
+        document.querySelector('.btn-new').style.opacity = "50%";
+    }
+    if(hold){
+        document.querySelector('.btn-hold').style.opacity = "50%";
+    }
 }
 
 function buttonView(){
@@ -262,3 +285,18 @@ function buttonView(){
     document.querySelector('.btn-new').style.opacity = "100%";
     document.querySelector('.btn-hold').style.opacity = "100%";
 }
+
+
+
+
+/*
+<h1 class = "h1">Rolling Wild</h1>
+<p class = "rules">Rule 1: If you roll a 1, you loose your turn and your current score <br> Rule 2: Each player get 1 "Take a chance
+<br>
+Rule 3: The winner can give 10 sips!
+<br>
+Rule 4: If you roll two sixes in a row you loose your whole score and must take two sips
+</p>
+<button class="btn-final-score"><i></i>Start game</button>
+<input type="number"  placeholder="Type final score here: " class = "final-score">
+*/
