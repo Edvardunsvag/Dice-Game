@@ -12,8 +12,8 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname+'/index.html');
 });
 
-app.get('/style.css', function(req, res) {
-  res.sendFile(__dirname + "/" + "style.css");
+app.get('public/style.css', function(req, res) {
+  res.sendFile(__dirname + 'public/style.css");
 });
 
 app.post("/", function(req, res){
