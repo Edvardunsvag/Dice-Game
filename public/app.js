@@ -97,9 +97,9 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
         //ELSE normal run
         else {
             if (prevDice === dice && dice === 6) {
+                document.querySelector('.chance').style.display = 'block';
                 document.querySelector('.chance').textContent =
                     'To seksere på rad. Du mister alle poeng og må shotte med en annen.';
-                document.querySelector('.chance').style.display = 'block';
 
                 scores[activePlayer] = 0;
                 document.querySelector('#score-' + activePlayer).textContent =
@@ -116,15 +116,16 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
                     '#current-' + activePlayer
                 ).textContent = roundScore;
             } else {
+                document.querySelector('.chance').style.display = 'block';
                 document.querySelector('.chance').textContent =
                     'Du trillet en ener. Automatisk chugg';
-                document.querySelector('.chance').style.display = 'block';
+
                 gameActive = false;
                 buttonHide(true, true, true, true);
                 setTimeout(function () {
                     buttonView();
                     gameActive = true;
-
+                    document.querySelector('.chance').style.display = 'none';
                     nextPlayer();
                 }, 3500);
             }
@@ -151,7 +152,6 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
 });
 
 function nextPlayer() {
-    document.querySelector('.chance').style.display = 'none';
     prevDice = 0;
     activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
     roundScore = 0;
@@ -207,13 +207,12 @@ document.querySelector('.btn-chance').addEventListener('click', function () {
 
 function chance_hjelp(chanceNr) {
     activePlayer === 0 ? (p1Chance = true) : (p2Chance = true);
-
     document.querySelector('.chance').style.display = 'block';
     chance = true;
     chancePrev = true;
+    document.querySelector('.chance-used' + chanceNr).style.display = 'block';
     document.querySelector('.chance').textContent =
         'You have taken a chance. Your opponent gets three tries, and if the sum is above 10, the points is yours.';
-    document.querySelector('.chance-used' + chanceNr).style.display = 'block';
 
     if (activePlayer === 0 && p1Chance) {
         document.querySelector('.btn-chance').disabled = true;
