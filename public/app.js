@@ -254,9 +254,8 @@ document
 
         if (gameScore != '') {
             buttonStart();
-            document.querySelector('.btn-final-score').style.display = 'none';
-            document.querySelector('.final-score').style.display = 'none';
             document.querySelector('.h1').style.display = 'none';
+            document.querySelector('.final-score-div').style.display = 'none';
 
             show();
         }
